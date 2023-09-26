@@ -1,9 +1,9 @@
 import { Grid } from 'react-loader-spinner';
 import { useSelector } from 'react-redux';
-import { getIsLoading } from 'redux/selectors';
+import { selectIsLoading } from 'redux/selectors';
 
 export const Loader = () => {
-  const isLoading = useSelector(getIsLoading);
+  const isLoading = useSelector(selectIsLoading);
   return (
     <Grid
       visible={isLoading}

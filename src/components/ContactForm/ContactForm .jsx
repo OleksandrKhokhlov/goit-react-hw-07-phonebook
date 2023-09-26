@@ -3,7 +3,7 @@ import { Formik, Field, Form } from 'formik';
 import { AddButton,  EntryField,  ErrorMsg } from './ContactForm.styled ';
 import { useDispatch, useSelector} from 'react-redux';
 import { addContact } from 'redux/operations';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 
 const nameRegExp =
   /^[a-zA-Zа-яА-Я]+(([' \\-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
@@ -28,7 +28,7 @@ const schema = Yup.object().shape({
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
 
   const handlerSubmit = (values, actions) => {
     const handlerAddContact = () => dispatch(addContact(values));

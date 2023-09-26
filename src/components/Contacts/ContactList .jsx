@@ -5,36 +5,33 @@ import {
   ContactsItem,
   ContactsList,
 } from './ContactList .styled';
-import { getContacts, getError, getFilter } from 'redux/selectors';
+import { selectError, selectVisibleContacts } from 'redux/selectors';
 import { deleteContact } from 'redux/operations';
 import toast from 'react-hot-toast';
 
 export const Contacts = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(getFilter);
-  const contacts = useSelector(getContacts);
-  const errorMessage = useSelector(getError);
+  const contacts = useSelector(selectVisibleContacts);
+  const errorMessage = useSelector(selectError);
 
   return (
     <>
       <Filter />
-      {errorMessage ? ( 
+      {errorMessage ? (
         toast.error(errorMessage)
-      ) : ( 
+      ) : (
         <ContactsList>
-          {contacts
-            .filter(({ name }) => name.toLowerCase()?.includes(filter))
-            .map(({ id, name, number }) => (
-              <ContactsItem key={id}>
-                {name}: {number}
-                <ButtonDelete
-                  type="button"
-                  onClick={() => dispatch(deleteContact(id))}
-                >
-                  Delete
-                </ButtonDelete>
-              </ContactsItem>
-            ))}
+          {contacts?.map(({ id, name, number }) => (
+            <ContactsItem key={id}>
+              {name}: {number}
+              <ButtonDelete
+                type="button"
+                onClick={() => dispatch(deleteContact(id))}
+              >
+                Delete
+              </ButtonDelete>
+            </ContactsItem>
+          ))}
         </ContactsList>
       )}
     </>
